@@ -163,17 +163,17 @@ module Codebreaker
 
     describe '#ask_attempts' do
       it 'call read_str' do
-        expect(console_helper).to receive(:read_str).and_return(1)
+        expect(console_helper).to receive(:read_str).and_return('1')
         subject.ask_attempts
       end
       context 'wrong variant' do
         it 'print ATTEMPTS_WRONG' do
-          allow(console_helper).to receive(:read_str).and_return(0, 1)
+          allow(console_helper).to receive(:read_str).and_return('0', '1')
           expect(console_helper).to receive(:print_attempts_wrong)
           subject.ask_attempts
         end
         it 'call set_attempts' do
-          allow(console_helper).to receive(:read_str).and_return(0, 1)
+          allow(console_helper).to receive(:read_str).and_return('0', '1')
           expect(subject).to receive(:ask_attempts)
           subject.ask_attempts
         end
@@ -181,15 +181,15 @@ module Codebreaker
 
       context 'correct variant' do
         it 'return 8  when #1' do
-          allow(console_helper).to receive(:read_str).and_return(1)
+          allow(console_helper).to receive(:read_str).and_return('1')
           expect(subject.ask_attempts).to be(8)
         end
         it 'return 12 when #2' do
-          allow(console_helper).to receive(:read_str).and_return(2)
+          allow(console_helper).to receive(:read_str).and_return('2')
           expect(subject.ask_attempts).to be(12)
         end
         it 'return 15 when #3' do
-          allow(console_helper).to receive(:read_str).and_return(3)
+          allow(console_helper).to receive(:read_str).and_return('3')
           expect(subject.ask_attempts).to be(15)
         end
       end

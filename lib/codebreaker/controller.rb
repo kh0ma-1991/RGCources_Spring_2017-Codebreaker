@@ -25,7 +25,7 @@ module Codebreaker
     def playing(secret_code)
       while(@game.attempts > 0) do
         guess_code = @console.read_str
-        write_code_evaluating(secret_code,guess_code) if(valid_code?(guess_code))
+        next write_code_evaluating(secret_code,guess_code) if(valid_code?(guess_code))
         @console.print_guess_wrong
       end
     end
@@ -34,7 +34,7 @@ module Codebreaker
       guess_checked = @game.check_code(guess_code)
       winning(secret_code) if(guess_checked == '++++')
       @console.print_marked_response(@game.attempts,guess_checked) if(@game.attempts>0)
-      @console.write_message(guess_checked) if(@game.attempts == 0)
+      puts(guess_checked) if(@game.attempts == 0)
     end
 
     def winning(secret_code)
@@ -44,17 +44,10 @@ module Codebreaker
     end
 
     def ask_attempts
-      case @console.read_str.to_i
-        when 1
-          8
-        when 2
-          12
-        when 3
-          15
-        else
-          @console.print_attempts_wrong
-          ask_attempts
-      end
+      attempts = {'1': 8, '2': 12, '3': 15}[@console.read_str.to_sym]
+      return attempts if attempts
+      @console.print_attempts_wrong
+      ask_attempts
     end
 
     def valid_code?(guess_code)

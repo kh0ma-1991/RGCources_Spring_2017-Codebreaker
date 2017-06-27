@@ -1,9 +1,10 @@
 module Codebreaker
   class Game
-    attr_accessor :attempts
+    attr_accessor :attempts, :hints
 
     def initialize
       @attempts = 8
+      @hints = 1
     end
 
     def start
@@ -12,6 +13,15 @@ module Codebreaker
 
     def generate_code
       Array.new(4) { rand(1..6) }.join
+    end
+
+    def hint
+      return "You don't have hints enough" if hints <= 0
+      self.hints -= 1
+      mask = '****'
+      random_index = rand(1..4)
+      mask[random_index] = @secret_code[random_index]
+      mask
     end
 
     def check_code(guess_code)

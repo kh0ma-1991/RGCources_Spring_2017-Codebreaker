@@ -19,7 +19,7 @@ module Codebreaker
       return "You don't have hints enough" if hints <= 0
       self.hints -= 1
       mask = '****'
-      random_index = rand(1..4)
+      random_index = rand(0..3)
       mask[random_index] = @secret_code[random_index]
       mask
     end
